@@ -19,7 +19,7 @@
         "temp_max": 40,
         "temp_min": -10,
         "hum_max": 50,
-        "hum_min": 0
+        "hum_min": 100
     }
 
 }
