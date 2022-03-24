@@ -53,11 +53,11 @@ def publish_Fake_Sensor_Values_to_MQTT():
 	threading.Timer(3, publish_Fake_Sensor_Values_to_MQTT).start()
 	global toggle
 	if toggle == 0:
-		Humidity_Fake_Value = float("{0:.2f}".format(random.uniform(50, 100)))
+		Humidity_Fake_Value = float("{0:.2f}".format(random.uniform(-40, 200)))
 
 		Humidity_Data = {}
 		Humidity_Data['Sensor_ID'] = "Sensor02"
-		Humidity_Data['Date'] = (datetime.today()).strftime("%d-%b-%Y %H:%M:%S:%f")
+		Humidity_Data['Date'] = (datetime.today()).strftime("%Y-%m-%d %H:%M:%S")
 		Humidity_Data['Humidity'] = Humidity_Fake_Value
 		humidity_json_data = json.dumps(Humidity_Data)
 
@@ -66,11 +66,11 @@ def publish_Fake_Sensor_Values_to_MQTT():
 		toggle = toggle + 1
 
 	else:
-		Temperature_Fake_Value = float("{0:.2f}".format(random.uniform(1, 30)))
+		Temperature_Fake_Value = float("{0:.2f}".format(random.uniform(0, 50)))
 
 		Temperature_Data = {}
 		Temperature_Data['Sensor_ID'] = "Sensor01"
-		Temperature_Data['Date'] = (datetime.today()).strftime("%d-%b-%Y %H:%M:%S:%f")
+		Temperature_Data['Date'] = (datetime.today()).strftime("%Y-%m-%d %H:%M:%S")
 		Temperature_Data['Temperature'] = Temperature_Fake_Value
 		temperature_json_data = json.dumps(Temperature_Data)
 

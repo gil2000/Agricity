@@ -17,9 +17,9 @@
 
     "validacoes": {
         "temp_max": 40,
-        "temp_min": -10,
-        "hum_max": 50,
-        "hum_min": 1000
+        "temp_min": 0,
+        "hum_max": 100,
+        "hum_min": 0
     }
 
 }
