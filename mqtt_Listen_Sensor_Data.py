@@ -5,7 +5,7 @@ from store_Sensor_Data_to_DB import sensor_Data_Handler
 
 with open("config.json") as json_data_file:
     data = json.load(json_data_file)
-print(data)
+#print(data)
 
 # Definições MQTT 
 MQTT_Broker = data['mqtt']['broker']
@@ -20,7 +20,7 @@ def on_connect(mosq, obj, flag, rc):
 # Guardar a mensagem na base de dados recorrendo ao ficheiro store
 def on_message(mosq, obj, msg):
 	# This is the Master Call for saving MQTT Data into DB
-	# For details of "sensor_Data_Handler" function please refer "sensor_data_to_db.py"
+	# Função "sensor_Data_Handler" está no script "sensor_data_to_db.py"
 	print ("Dados MQTT recebidos...")
 	print ("MQTT Tópico: " + msg.topic)  
 	print ("Dados: " + str(msg.payload))
