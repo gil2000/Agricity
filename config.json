@@ -3,7 +3,8 @@
         "host": "localhost",
         "user": "root",
         "passwd": "",
-        "db": "agricity"
+        "db": "agricity",
+        "tables": "sensor"
     },
 
     "mqtt": {

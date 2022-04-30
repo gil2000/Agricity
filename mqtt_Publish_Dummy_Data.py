@@ -19,9 +19,9 @@ MQTT_Topic_Temperature = data['mqtt']['topic_temperatura']
 def on_connect(client, userdata, rc):
 	if rc != 0:
 		pass
-		print ("Falha a conexão ao broker MQTT...")
+		print ("Falha na ligação ao broker MQTT...")
 	else:
-		print ("Conectado ao MQTT Broker: " + str(MQTT_Broker))
+		print ("Ligado ao MQTT Broker: " + str(MQTT_Broker))
 
 def on_publish(client, userdata, mid):
 	pass

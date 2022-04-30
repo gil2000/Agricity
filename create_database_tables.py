@@ -1,5 +1,5 @@
 from __future__ import print_function
-
+import json
 import mysql.connector
 from mysql.connector import errorcode
 
@@ -8,11 +8,14 @@ from mysql.connector import errorcode
 
 def main():
 
-    DB_NAME = 'agricity'
+    with open("config.json") as json_data_file:
+        data = json.load(json_data_file)
+
+    DB_NAME = data['mysql']['db']
 
     TABLES = {}
-    TABLES['agricity'] = (  
-        " CREATE TABLE `agricity` ("
+    TABLES[data['mysql']['tables']] = (  
+        " CREATE TABLE `" + data['mysql']['tables'] +"` ("
         " `id` INT(11) NOT NULL AUTO_INCREMENT,"
         " `UTCTime` DATE NOT NULL,"
         " `IdEstacao` VARCHAR(20) NOT NULL COLLATE 'utf8_bin',"
@@ -38,7 +41,7 @@ def main():
         ") ENGINE=InnoDB")
 
     
-    cnx = mysql.connector.connect(user='root')
+    cnx = mysql.connector.connect(user=data['mysql']['user'])
     cursor = cnx.cursor()
 
     database_test(DB_NAME,cnx,cursor)
