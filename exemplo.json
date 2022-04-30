@@ -1,0 +1,22 @@
+{
+    "UTCTime": "2022-04-19T08:45:38.793662",
+    "IdEstacao":"Z9Z9Z9",
+    "OutdoorTemperature": 19.89, 
+    "OutdoorHumidity": 58,
+    "Rain60Minutes": 0.0,
+    "Rain24Hours": 0.0,
+    "SunlightVisible": 13,
+    "SunlightUVIndex": 0.0,
+    "WindSpeed": 0.0,
+    "WindDirection": "NNW",
+    "BarometricPressure": 100.98601,  
+    "batteryPower": 0,
+    "solarPower": 0,
+    "soilTemperature": 20,
+    "soilHumidity": 60,
+    "metal": 1000, 
+    "lat": -90.00000,
+    "lon": -180.00000,
+    "Altitude": 100,
+    "Vegetacao":"AAAAAA"
+}
