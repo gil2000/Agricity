@@ -1,5 +1,6 @@
 import mysql.connector
 from mysql.connector import Error
+import create_database_tables as createTablespy
 
 try:
     conn = mysql.connector.connect(
@@ -15,7 +16,14 @@ try:
         curs.execute("select database();")
         record = curs.fetchone()
         print("You're connected to database: ", record)
-
+        curs.execute("SHOW TABLES")
+        all_tables_in_db = []
+        for x in curs:
+            all_tables_in_db.append(x)
+        if (all_tables_in_db.count(('agricity',)) >= 1 ):
+            print("Table: agricity exists")
+        else:
+            createTablespy.main()
 except Error as e:
     print("Error while connecting to MySQL", e)
 finally:
