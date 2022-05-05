@@ -4,7 +4,7 @@
         "user": "root",
         "passwd": "",
         "db": "agricity",
-        "tables": "sensor"
+        "tables": "estacao"
     },
 
     "mqtt": {

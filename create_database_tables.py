@@ -14,10 +14,10 @@ def main():
     DB_NAME = data['mysql']['db']
 
     TABLES = {}
-    TABLES[data['mysql']['tables']] = (  
+    TABLES[data['mysql']['tables']] = (
         " CREATE TABLE `" + data['mysql']['tables'] +"` ("
         " `id` INT(11) NOT NULL AUTO_INCREMENT,"
-        " `UTCTime` DATE NOT NULL,"
+        " `UTCTime` TIMESTAMP NOT NULL,"
         " `IdEstacao` VARCHAR(20) NOT NULL COLLATE 'utf8_bin',"
         " `OutdoorTemperature` FLOAT NULL DEFAULT NULL,"
         " `OutdoorHumidity` FLOAT NULL DEFAULT NULL,"
