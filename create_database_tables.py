@@ -8,7 +8,7 @@ from mysql.connector import errorcode
 
 def main():
 
-    with open("config.json") as json_data_file:
+    with open("ficheiros\config.json") as json_data_file:
         data = json.load(json_data_file)
 
     DB_NAME = data['mysql']['db']

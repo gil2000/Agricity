@@ -3,7 +3,7 @@ import paho.mqtt.client as mqtt
 import random, threading, json
 from datetime import datetime
 
-with open("config.json") as json_data_file:
+with open("ficheiros\config.json") as json_data_file:
     data = json.load(json_data_file)
 #print(data)
 

@@ -3,7 +3,7 @@ from mysql.connector import Error
 import create_database_tables as createTablespy
 import json
 
-with open("config.json") as json_data_file:
+with open("ficheiros\config.json") as json_data_file:
     data = json.load(json_data_file)
 
 try:
