@@ -1,4 +1,6 @@
 # Importar a bibliteca paho, random, threading, json e datetime
+import re
+from time import sleep
 import paho.mqtt.client as mqtt
 import random, threading, json
 from datetime import datetime
@@ -12,8 +14,7 @@ with open("ficheiros\config.json") as json_data_file:
 MQTT_Broker = data['mqtt']['broker']
 MQTT_Port = data['mqtt']['port']
 Keep_Alive_Interval = data['mqtt']['alive_interval']
-MQTT_Topic_Humidity = data['mqtt']['topic_humidade']
-MQTT_Topic_Temperature = data['mqtt']['topic_temperatura']
+MQTT_Topic = data['mqtt']['topic']
 #====================================================
 
 def on_connect(client, userdata, rc):
@@ -47,36 +48,76 @@ def publish_To_Topic(topic, message):
 # Sensor Fake 
 # Codigo usado para criar valores Fake 
 
-toggle = 0
+def createFakeFloatValue():
+	valor =  float("{0:.2f}".format(random.uniform(0, 200)))
+	return valor
+
+def createFakeIntValue():
+	valor =  int("{0}".format(random.randint(0, 150)))
+	return valor
+
+def createFakeStrValue():
+	valor = float("{0:.2f}".format(random.uniform(0, 200)))
+	if (valor > 100 and valor < 150):
+		valor = "NNW"
+	elif (valor > 150):
+		valor = "N"
+	elif (valor < 100 and valor > 50):
+		valor = "S"
+	else:
+		valor = "SEE"
+	return valor
+
 
 def publish_Fake_Sensor_Values_to_MQTT():
-	threading.Timer(3, publish_Fake_Sensor_Values_to_MQTT).start()
-	global toggle
-	if toggle == 0:
-		Humidity_Fake_Value = float("{0:.2f}".format(random.uniform(-40, 200)))
+	while(1):
+		OutdoorTempreratureFake = createFakeFloatValue()
+		OutdoorHumidityFake = createFakeFloatValue()
+		Rain60MinutesFake = createFakeFloatValue()
+		Rain24HoursFake = createFakeFloatValue()
+		SunlightVisibleFake = createFakeIntValue()
+		SunlightUVIndexFake = createFakeFloatValue()
+		WindSpeedFake = createFakeFloatValue()
+		BarometricPressureFake = createFakeFloatValue()
+		bateryPowerFake = createFakeIntValue()
+		SolarPowerFake = createFakeIntValue()
+		SoilTemperatureFake = createFakeIntValue()
+		SoilHumidityFake = createFakeIntValue()
+		WindDirectionFake = createFakeStrValue()
+		metalFake = createFakeIntValue()
 
-		Humidity_Data = {}
-		Humidity_Data['Sensor_ID'] = "Sensor02"
-		Humidity_Data['Date'] = (datetime.today()).strftime("%Y-%m-%d %H:%M:%S")
-		Humidity_Data['Humidity'] = Humidity_Fake_Value
-		humidity_json_data = json.dumps(Humidity_Data)
 
-		print ("Valor fake de humidade: " + str(Humidity_Fake_Value) + "...")
-		publish_To_Topic (MQTT_Topic_Humidity, humidity_json_data)
-		toggle = toggle + 1
 
-	else:
-		Temperature_Fake_Value = float("{0:.2f}".format(random.uniform(0, 50)))
+		#Criar e definir valores globais aqui
+		Valores = {}
+		Valores['created_at'] = (datetime.today()).strftime("%Y-%m-%d %H:%M:%S")
 
-		Temperature_Data = {}
-		Temperature_Data['Sensor_ID'] = "Sensor01"
-		Temperature_Data['Date'] = (datetime.today()).strftime("%Y-%m-%d %H:%M:%S")
-		Temperature_Data['Temperature'] = Temperature_Fake_Value
-		temperature_json_data = json.dumps(Temperature_Data)
+		Valores['idEstacao'] = MQTT_Topic
 
-		print ("Valor fake de temperatura: " + str(Temperature_Fake_Value) + "...")
-		publish_To_Topic (MQTT_Topic_Temperature, temperature_json_data)
-		toggle = 0
+		#valores a separar para cada tabela individual
+
+		Valores["OutdoorTemperature"] = OutdoorTempreratureFake
+		Valores['OutdoorHumidity'] = OutdoorHumidityFake
+		Valores['Rain60Minutes'] = Rain60MinutesFake
+		Valores['Rain24Hours'] = Rain24HoursFake
+		Valores['SunlightVisible'] = SunlightVisibleFake
+		Valores['SunlightUVIndex'] = SunlightUVIndexFake
+		Valores['WindSpeed'] =WindSpeedFake
+		Valores['WindDirection'] = WindDirectionFake
+		Valores['BarometricPressure'] = BarometricPressureFake
+		Valores['batteryPower'] = bateryPowerFake
+		Valores['SolarPower'] = SolarPowerFake
+		Valores['SoilTemperature'] = SoilTemperatureFake
+		Valores['SoilHumidity'] = SoilHumidityFake
+		Valores['metal'] = metalFake
+
+
+
+		json_valores = json.dumps(Valores)
+
+		print ("Valores: " + json_valores)
+		sleep(10)
+		publish_To_Topic (MQTT_Topic, json_valores)
 
 
 publish_Fake_Sensor_Values_to_MQTT()

@@ -11,9 +11,7 @@
         "broker": "test.mosquitto.org",
         "port": 1883,
         "alive_interval": 45,
-        "topic": "Sensor01/#",
-        "topic_humidade": "Sensor01/Humidade",
-        "topic_temperatura": "Sensor01/Temperatura"
+        "topic": "Estacao_1"
     },
 
     "validacoes": {

@@ -13,9 +13,11 @@ MQTT_Port = data['mqtt']['port']
 Keep_Alive_Interval = data['mqtt']['alive_interval']
 MQTT_Topic = data['mqtt']['topic']
 
+
 # Conectar e Subscrever ao Tópico 
 def on_connect(mosq, obj, flag, rc):
 	mqttc.subscribe(MQTT_Topic, 0)
+
 
 # Guardar a mensagem na base de dados recorrendo ao ficheiro store
 def on_message(mosq, obj, msg):
@@ -35,6 +37,7 @@ mqttc = mqtt.Client()
 mqttc.on_message = on_message
 mqttc.on_connect = on_connect
 mqttc.on_subscribe = on_subscribe
+
 
 # Conexão
 mqttc.connect(MQTT_Broker, int(MQTT_Port), int(Keep_Alive_Interval))
