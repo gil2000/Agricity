@@ -52,8 +52,8 @@ def createFakeFloatValue():
 	valor =  float("{0:.2f}".format(random.uniform(0, 200)))
 	return valor
 
-def createFakeIntValue():
-	valor =  int("{0}".format(random.randint(0, 150)))
+def createFakeIntValue(minimum=0 ,maximum= 150):
+	valor =  int("{0}".format(random.randint(minimum, maximum)))
 	return valor
 
 def createFakeStrValue():
@@ -87,12 +87,10 @@ def publish_Fake_Sensor_Values_to_MQTT():
 		metalFake = createFakeIntValue()
 
 
-
 		#Criar e definir valores globais aqui
 		Valores = {}
 		Valores['created_at'] = (datetime.today()).strftime("%Y-%m-%d %H:%M:%S")
-
-		Valores['idEstacao'] = MQTT_Topic
+		Valores['idEstacao'] = "Estacao_" + str(createFakeIntValue(1,20))
 
 		#valores a separar para cada tabela individual
 
@@ -102,7 +100,7 @@ def publish_Fake_Sensor_Values_to_MQTT():
 		Valores['Rain24Hours'] = Rain24HoursFake
 		Valores['SunlightVisible'] = SunlightVisibleFake
 		Valores['SunlightUVIndex'] = SunlightUVIndexFake
-		Valores['WindSpeed'] =WindSpeedFake
+		Valores['WindSpeed'] = WindSpeedFake
 		Valores['WindDirection'] = WindDirectionFake
 		Valores['BarometricPressure'] = BarometricPressureFake
 		Valores['batteryPower'] = bateryPowerFake
@@ -110,6 +108,18 @@ def publish_Fake_Sensor_Values_to_MQTT():
 		Valores['SoilTemperature'] = SoilTemperatureFake
 		Valores['SoilHumidity'] = SoilHumidityFake
 		Valores['metal'] = metalFake
+		Valores["lat"] = createFakeFloatValue()
+		Valores["lon"] = createFakeFloatValue()
+		Valores["Vegetacao"] = createFakeStrValue()
+		Valores["observacoes"] = createFakeStrValue()
+		Valores["Altitude"] = createFakeIntValue()
+		toggle = 1
+		if(toggle):
+			Valores["ativo"] = toggle
+			toggle = toggle - 1
+		else:
+			Valores["ativo"] = toggle
+			toggle = toggle + 1
 
 
 

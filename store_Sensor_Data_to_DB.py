@@ -26,12 +26,40 @@ def Data_Handler(jsonData):
 
 	idEstacao = json_Dict['idEstacao']
 	created_at = json_Dict['created_at']
+	ativo = json_Dict['ativo']
+	lat = json_Dict['lat']
+	lon = json_Dict['lon']
+	Vegetacao = json_Dict['Vegetacao']
+	Altitude = json_Dict['Altitude']
+	observacoes = json_Dict['observacoes']
+
+	#nao tentar escrever estas tabelas porque fazem parte da tabela idEstacao
+	naoLer = ["ativo","lat","lon","Vegetacao","Altitude","observacoes","created_at","idEstacao"]
 
 	cursor = conn.cursor()
 	
-	# inserir na tabela outdoor temp
-	def insertIntoBD(created_at, tabela,valor, idEstacao):
-		if (tabela != "created_at" and tabela != "idEstacao"):
+	# inserir na tabelas tabelas respetivas
+	def insertIntoBD(created_at, tabela, valor, idEstacao):
+		
+		#Verifica se a estacao
+		if (tabela == "idEstacao"):
+
+			tabela = "estacao"
+			cursor.execute("SELECT idEstacao, COUNT(*) FROM estacao WHERE idEstacao = %s GROUP BY idEstacao", (valor,))
+
+			# Esta linha é necessária para o rowcount funcionar
+			results = cursor.fetchall()
+			# Retorna o numero de vezes que o id dessa estacao especifica aparece na base de dados. 1 ou 0, hopefully. Assim sabemos se ja existe
+			row_count = cursor.rowcount
+			if row_count == 0:
+
+				#Estacao nao existe na base de dados entao adiciona à tabela estacao para poder ser ligada às outras tabelas
+				insert = """INSERT INTO """+ tabela +""" (idEstacao, lat, lon, Altitude, Vegetacao, ativo, observacoes) VALUES (%s,%s,%s,%s,%s,%s,%s) """
+				vals = (idEstacao, lat, lon, Altitude, Vegetacao, ativo, observacoes)
+				cursor.execute(insert, vals)	
+				conn.commit()
+
+		elif (tabela not in naoLer):
 			insert = """INSERT INTO """+ tabela +""" (created_at, valor, idEstacao) VALUES (%s,%s,%s) """
 			vals = (created_at, valor, idEstacao)
 			cursor.execute(insert, vals)	
@@ -45,29 +73,6 @@ def Data_Handler(jsonData):
 
 	conn.close()
 
-		
-	#Validação se o valor pertence ao domínio Min a Max, caso falso é enviado para a tabela logs
-	# elif Temperature < data['validacoes']['temp_min'] or Temperature > data['validacoes']['temp_max']:
-	# 	dbinsertlog = """INSERT INTO logs (SensorID, Date_n_Time, Value, Topic) VALUES (%s,%s,%s,%s) """
-	# 	vals = (SensorID, Data_and_Time, Temperature, logTopic)
-	# 	cursor.execute(dbinsertlog, vals)	
-	# 	conn.commit()
-	# 	cursor.close()
-
-	#Inserção dos Dados na BD ao ter passado todos os testes de validação
-	# else:
-	# 	dbinsert = """INSERT INTO dht22_temperature_data (SensorID, Date_n_Time, Temperature) VALUES (%s,%s,%s) """
-	# 	vals = (SensorID, Data_and_Time, Temperature)
-	# 	cursor.execute(dbinsert, vals)	
-	# 	conn.commit()
-
-	# 	dbinsertlog = """INSERT INTO logs (SensorID, Date_n_Time, Value, Topic) VALUES (%s,%s,%s,%s) """
-	# 	vals = (SensorID, Data_and_Time, Temperature, logTopic)
-	# 	cursor.execute(dbinsertlog, vals)
-	# 	conn.commit()
-	# 	print ("Inserida Informação da Temperatura na Base de Dados.")
-	# 	print ("")
-	# 	cursor.close()
 
 
 
