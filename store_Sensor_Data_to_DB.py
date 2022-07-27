@@ -21,8 +21,10 @@ def Data_Handler(jsonData):
 		password=data['mysql']['passwd']
 		)
 
-	#Parsing dos Dados 
+	##Parsing dos Dados 
 	json_Dict = json.loads(jsonData)
+	#Ler apenas os dados que são relevantes
+	#usableData = json_Dict["uplink_message"]["decoded_payload"]
 
 	idEstacao = json_Dict['idEstacao']
 	created_at = json_Dict['created_at']
@@ -33,8 +35,9 @@ def Data_Handler(jsonData):
 	Altitude = json_Dict['Altitude']
 	observacoes = json_Dict['observacoes']
 
+
 	#nao tentar escrever estas tabelas porque fazem parte da tabela idEstacao
-	naoLer = ["ativo","lat","lon","Vegetacao","Altitude","observacoes","created_at","idEstacao"]
+	naoLer = ["ativo","lat","lon","Vegetacao","Altitude","observacoes","created_at","idEstacao","msgID"]
 
 	cursor = conn.cursor()
 	
@@ -68,7 +71,8 @@ def Data_Handler(jsonData):
 			return
 
 	for entrada in json_Dict:
-		valor = json_Dict[entrada]
+		#valor = json_Dict[entrada]
+		valor = json_Dict["uplink_message"]["decoded_payload"][entrada]
 		insertIntoBD(created_at, entrada, valor, idEstacao)
 
 	conn.close()
