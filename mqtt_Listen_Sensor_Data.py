@@ -12,10 +12,13 @@ MQTT_Broker = data['mqtt']['broker']
 MQTT_Port = data['mqtt']['port']
 Keep_Alive_Interval = data['mqtt']['alive_interval']
 MQTT_Topic = data['mqtt']['topic']
+MQTT_User = data['mqtt']['user']
+MQTT_Passwd = data['mqtt']['passwd']
 
 
 # Conectar e Subscrever ao Tópico 
 def on_connect(mosq, obj, flag, rc):
+    #importante manter o QoS como 0
 	mqttc.subscribe(MQTT_Topic, 0)
 
 
@@ -38,6 +41,8 @@ mqttc.on_message = on_message
 mqttc.on_connect = on_connect
 mqttc.on_subscribe = on_subscribe
 
+#Definição de utilizador e password
+mqttc.username_pw_set(MQTT_User, password=MQTT_Passwd)
 
 # Conexão
 mqttc.connect(MQTT_Broker, int(MQTT_Port), int(Keep_Alive_Interval))
