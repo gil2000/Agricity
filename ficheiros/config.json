@@ -8,7 +8,7 @@
     },
 
     "mqtt": {
-        "broker": "teste-agricity@ttn",
+        "broker": "eu1.cloud.thethings.network",
         "port": 1883,
         "alive_interval": 120,
         "topic": "#",
