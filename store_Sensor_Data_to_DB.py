@@ -31,7 +31,9 @@ def Data_Handler(jsonData):
 	idEstacao = json_Dict['end_device_ids']['device_id']
 
 	#Tira o T e o Z + casas decimais da timestamp
-	created_at =  json_Dict['received_at'].replace("T", " ").replace(".000Z", "") 
+	created_at =  json_Dict['received_at']
+	created_at = created_at.replace("T"," ")
+	created_at = created_at.partition(".")[0]
 	ativo = 1
 
 	lat = json_Dict['uplink_message']['locations']['user']['latitude']
