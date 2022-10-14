@@ -29,7 +29,9 @@ def Data_Handler(jsonData):
 	
 	#Dados dependentes do TTN
 	idEstacao = json_Dict['end_device_ids']['device_id']
-	created_at = json_Dict['received_at']
+
+	#Tira o T e o Z + casas decimais da timestamp
+	created_at =  json_Dict['received_at'].replace("T", " ").replace(".000Z", "") 
 	ativo = 1
 
 	lat = json_Dict['uplink_message']['locations']['user']['latitude']
@@ -37,7 +39,7 @@ def Data_Handler(jsonData):
 	altitude = json_Dict['uplink_message']['locations']['user']['altitude']
 
 
-	agricityData = json_Dict['uplink_message']["uplink_message"]["decoded_payload"]
+	agricityData = json_Dict['uplink_message']['decoded_payload']
 
 	#Procura se existem registos da estacao
 	cursor.execute("SELECT idEstacao, COUNT(*) FROM estacao WHERE idEstacao = %s GROUP BY idEstacao", (idEstacao,))
