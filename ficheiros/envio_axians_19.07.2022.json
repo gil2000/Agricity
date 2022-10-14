@@ -1,6 +1,6 @@
 {
     "end_device_ids": {
-        "device_id": "eui-a8610a3330187402",
+--->        "device_id": "eui-a8610a3330187402",
         "application_ids": {
             "application_id": "teste-agricity"
         },
@@ -16,20 +16,20 @@
         "rpc:/ttn.lorawan.v3.GsNs/HandleUplink:01G8BY7067SZBTA9V04KG9EVYH",
         "rpc:/ttn.lorawan.v3.NsAs/HandleUplink:01G8BY70CNCJFS2CQT2147Q81X"
     ],
-    "received_at": "2022-07-19T19:16:02.070362512Z",
+--->"received_at": "2022-07-19T19:16:02.070362512Z",
     "uplink_message": {
         "session_key_id": "AYIXMP230B4Yp5TKq+hyjw==",
         "f_port": 2,
         "f_cnt": 24,
         "frm_payload": "AdejskEAAGxCAAAAAAAAwEEAAIhBAAAAAA==",
         "decoded_payload": {
-            "msgID": 1,
-            "outdoorHumidity": 59,
-            "outdoorTemperature": 22.329999923706055,
-            "rain24Hours": 24,
-            "rain60Minutes": 0,
-            "sunlightUVIndex": 0,
-            "sunlightVisible": 17
+--->            "msgID": 1,
+--->            "outdoorHumidity": 59,
+--->            "outdoorTemperature": 22.329999923706055,
+--->            "rain24Hours": 24,
+--->            "rain60Minutes": 0,
+--->            "sunlightUVIndex": 0,
+--->            "sunlightVisible": 17
         },
         "rx_metadata": [
             {
@@ -68,14 +68,14 @@
             "coding_rate": "4/5",
             "frequency": "867500000"
         },
-        "received_at": "2022-07-19T19:16:01.863489572Z",
+--->        "received_at": "2022-07-19T19:16:01.863489572Z",
         "confirmed": true,
         "consumed_airtime": "0.082176s",
         "locations": {
             "user": {
-                "latitude": 38.79852,
-                "longitude": -9.101135,
-                "altitude": 8,
+--->                "latitude": 38.79852,
+--->                "longitude": -9.101135,
+--->                "altitude": 8,
                 "source": "SOURCE_REGISTRY"
             }
         },
@@ -94,6 +94,9 @@
         }
     }
 }
+
+
+
 {
     "end_device_ids": {
         "device_id": "eui-a8610a3330187402",

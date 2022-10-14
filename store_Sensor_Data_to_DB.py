@@ -21,48 +21,51 @@ def Data_Handler(jsonData):
 		password=data['mysql']['passwd']
 		)
 
+	cursor = conn.cursor()
+
 	##Parsing dos Dados 
 	json_Dict = json.loads(jsonData)
 	#Ler apenas os dados que são relevantes
-	#usableData = json_Dict["uplink_message"]["decoded_payload"]
+	
+	#Dados dependentes do TTN
+	idEstacao = json_Dict['end_device_ids']['device_id']
+	created_at = json_Dict['received_at']
+	ativo = 1
 
-	idEstacao = json_Dict['idEstacao']
-	created_at = json_Dict['created_at']
-	ativo = json_Dict['ativo']
-	lat = json_Dict['lat']
-	lon = json_Dict['lon']
-	Vegetacao = json_Dict['Vegetacao']
-	Altitude = json_Dict['Altitude']
-	observacoes = json_Dict['observacoes']
+	lat = json_Dict['uplink_message']['locations']['user']['latitude']
+	lon = json_Dict['uplink_message']['locations']['user']['longitude']
+	altitude = json_Dict['uplink_message']['locations']['user']['altitude']
 
 
-	#nao tentar escrever estas tabelas porque fazem parte da tabela idEstacao
-	naoLer = ["ativo","lat","lon","Vegetacao","Altitude","observacoes","created_at","idEstacao","msgID"]
+	agricityData = json_Dict['uplink_message']["uplink_message"]["decoded_payload"]
 
-	cursor = conn.cursor()
+	#Procura se existem registos da estacao
+	cursor.execute("SELECT idEstacao, COUNT(*) FROM estacao WHERE idEstacao = %s GROUP BY idEstacao", (idEstacao,))
+
+	# Esta linha é necessária para o rowcount funcionar
+	results = cursor.fetchall()
+	# Retorna o numero de vezes que o id dessa estacao especifica aparece na base de dados. 1 ou 0, hopefully. Assim sabemos se ja existe
+	row_count = cursor.rowcount
+
+	#testa se existe um registo dessa estação na BD
+	if row_count == 0:
+    		
+		#Estacao nao existe na base de dados entao adiciona à tabela estacao para poder ser ligada às outras tabelas
+		insert = """INSERT INTO estacao (idEstacao, lat, lon, altitude, ativo) VALUES (%s,%s,%s,%s,%s) """
+		vals = (idEstacao, lat, lon, altitude, ativo)
+		cursor.execute(insert, vals)	
+		conn.commit()
+
+	#Dados enviados pelo sensor da agricity
+	
+					
+	#nao tentar escrever estas tabelas porque fazem parte da tabela idEstacao ou porque não são de interesse para a BD
+	naoLer = ["msgID"]
+
 	
 	# inserir na tabelas tabelas respetivas
 	def insertIntoBD(created_at, tabela, valor, idEstacao):
-		
-		#Verifica se a estacao
-		if (tabela == "idEstacao"):
-
-			tabela = "estacao"
-			cursor.execute("SELECT idEstacao, COUNT(*) FROM estacao WHERE idEstacao = %s GROUP BY idEstacao", (valor,))
-
-			# Esta linha é necessária para o rowcount funcionar
-			results = cursor.fetchall()
-			# Retorna o numero de vezes que o id dessa estacao especifica aparece na base de dados. 1 ou 0, hopefully. Assim sabemos se ja existe
-			row_count = cursor.rowcount
-			if row_count == 0:
-
-				#Estacao nao existe na base de dados entao adiciona à tabela estacao para poder ser ligada às outras tabelas
-				insert = """INSERT INTO """+ tabela +""" (idEstacao, lat, lon, Altitude, Vegetacao, ativo, observacoes) VALUES (%s,%s,%s,%s,%s,%s,%s) """
-				vals = (idEstacao, lat, lon, Altitude, Vegetacao, ativo, observacoes)
-				cursor.execute(insert, vals)	
-				conn.commit()
-
-		elif (tabela not in naoLer):
+		if (tabela not in naoLer):
 			insert = """INSERT INTO """+ tabela +""" (created_at, valor, idEstacao) VALUES (%s,%s,%s) """
 			vals = (created_at, valor, idEstacao)
 			cursor.execute(insert, vals)	
@@ -70,9 +73,9 @@ def Data_Handler(jsonData):
 		else:
 			return
 
-	for entrada in json_Dict:
+	for entrada in agricityData:
 		#valor = json_Dict[entrada]
-		valor = json_Dict["uplink_message"]["decoded_payload"][entrada]
+		valor = agricityData[entrada]
 		insertIntoBD(created_at, entrada, valor, idEstacao)
 
 	conn.close()
@@ -84,8 +87,7 @@ def Data_Handler(jsonData):
 # Seleção da BD para introdução dos Dados
 
 def sensor_Data_Handler(Topic, jsonData):
-	if Topic == data['mqtt']['topic']:
-		Data_Handler(jsonData)
+	Data_Handler(jsonData)
 	
 
 #===============================================================
