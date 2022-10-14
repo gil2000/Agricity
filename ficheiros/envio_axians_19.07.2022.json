@@ -16,7 +16,7 @@
         "rpc:/ttn.lorawan.v3.GsNs/HandleUplink:01G8BY7067SZBTA9V04KG9EVYH",
         "rpc:/ttn.lorawan.v3.NsAs/HandleUplink:01G8BY70CNCJFS2CQT2147Q81X"
     ],
-    "received_at": "2022-07-19T19:16:02.070362512Z",
+"received_at": "2022-07-19T19:16:02.070362512Z",
     "uplink_message": {
         "session_key_id": "AYIXMP230B4Yp5TKq+hyjw==",
         "f_port": 2,
@@ -72,7 +72,7 @@
         "confirmed": true,
         "consumed_airtime": "0.082176s",
         "locations": {
-            "user": {
+        "user": {
                 "latitude": 38.79852,
                 "longitude": -9.101135,
                 "altitude": 8,
@@ -94,6 +94,9 @@
         }
     }
 }
+
+
+
 {
     "end_device_ids": {
         "device_id": "eui-a8610a3330187402",
