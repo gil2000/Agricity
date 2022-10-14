@@ -11,7 +11,7 @@
         "broker": "eu1.cloud.thethings.network",
         "port": 1883,
         "alive_interval": 120,
-        "topic": "v3/teste-agricity@ttn/devices/eui-a8610a3330187402/up",
+        "topic": "#",
         "user": "teste-agricity@ttn",
         "passwd": "NNSXS.6ZOQRGSQDUE3GK4LO6OK2T2ZYMPZCVCS7PSRGRI.373EW3C54Z5QGNEL5LSD35VKS5NMDSXWDXI7S7I2F5U4E2D56PCQ"
     },
