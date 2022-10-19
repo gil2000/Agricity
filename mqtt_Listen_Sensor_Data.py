@@ -3,7 +3,7 @@ import json
 import paho.mqtt.client as mqtt
 from store_Sensor_Data_to_DB import sensor_Data_Handler
 
-with open("ficheiros\config.json") as json_data_file:
+with open("ficheiros/config.json") as json_data_file:
     data = json.load(json_data_file)
 #print(data)
 
