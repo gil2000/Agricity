@@ -45,12 +45,12 @@ def Data_Handler(jsonData):
 	agricityData = json_Dict['uplink_message']['decoded_payload']
 
 	#Procura se existem registos da estacao
-	cursor.execute("SELECT nomeEstacao, COUNT(*) FROM estacao WHERE nomeEstacao = %s GROUP BY nomeEstacao", (nomeEstacao))
+	cursor.execute("SELECT nomeEstacao, COUNT(*) FROM estacao WHERE nomeEstacao = %s;", (nomeEstacao,))
 
 	# Esta linha é necessária para o rowcount funcionar
 	results = cursor.fetchall()
 	# Retorna o numero de vezes que o id dessa estacao especifica aparece na base de dados. 1 ou 0, hopefully. Assim sabemos se ja existe
-	row_count = cursor.rowcount
+	row_count = results[0][1]
 
 	#testa se existe um registo dessa estação na BD
 	if row_count == 0:
@@ -62,7 +62,7 @@ def Data_Handler(jsonData):
 		conn.commit()
 
 	#Encontra o id da estação a inserir
-	cursor.execute("SELECT id FROM estacao WHERE nomeEstacao = %s", (nomeEstacao,))
+	cursor.execute("SELECT id FROM estacao WHERE nomeEstacao = %s;", (nomeEstacao,))
 	selectid = cursor.fetchall()
 	idEstacao = selectid[0][0]
 
