@@ -44,6 +44,12 @@ def Data_Handler(jsonData):
 
 	agricityData = json_Dict['uplink_message']['decoded_payload']
 
+
+	#validação mt fast
+	if int(agricityData['msgID']) == 2:
+		if int(agricityData['barometricPressure']) > 10000 or int(agricityData['barometricPressure']) < 0:
+			agricityData['barometricPressure'] = 0
+
 	#Procura se existem registos da estacao
 	cursor.execute("SELECT nomeEstacao, COUNT(*) FROM estacao WHERE nomeEstacao = %s;", (nomeEstacao,))
 
