@@ -50,6 +50,9 @@ def Data_Handler(jsonData):
 		if int(agricityData['barometricPressure']) > 10000 or int(agricityData['barometricPressure']) < 0:
 			agricityData['barometricPressure'] = 0
 
+		if int(agricityData['soilTemperature']) > 1000:
+			agricityData['soilTemperature'] = 0
+
 	#Procura se existem registos da estacao
 	cursor.execute("SELECT nomeEstacao, COUNT(*) FROM estacao WHERE nomeEstacao = %s;", (nomeEstacao,))
 
