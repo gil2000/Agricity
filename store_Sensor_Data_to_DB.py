@@ -50,6 +50,9 @@ def Data_Handler(jsonData):
 		if int(agricityData['barometricPressure']) > 10000 or int(agricityData['barometricPressure']) < 0:
 			agricityData['barometricPressure'] = 0
 
+		if int(agricityData['soilTemperature']) > 1000:
+			agricityData['soilTemperature'] = 0
+
 	#Procura se existem registos da estacao
 	cursor.execute("SELECT nomeEstacao, COUNT(*) FROM estacao WHERE nomeEstacao = %s;", (nomeEstacao,))
 
@@ -82,18 +85,18 @@ def Data_Handler(jsonData):
 	
 	# inserir na tabelas tabelas respetivas
 	def insertIntoBD(created_at, tabela, valor, idEstacao):
-		if (tabela not in naoLer):
-			insert = """INSERT INTO """+ tabela +""" (created_at, valor, idEstacao) VALUES (%s,%s,%s) """
-			vals = (created_at, valor, idEstacao)
-			cursor.execute(insert, vals)	
-			conn.commit()
-		else:
-			return
+		insert = """INSERT INTO """+ tabela +""" (created_at, valor, idEstacao) VALUES (%s,%s,%s) """
+		vals = (created_at, valor, idEstacao)
+		cursor.execute(insert, vals)	
+		conn.commit()
+
 
 	for entrada in agricityData:
 		#valor = json_Dict[entrada]
 		valor = agricityData[entrada]
-		insertIntoBD(created_at, entrada, valor, idEstacao)
+		if (entrada not in naoLer):
+			entrada = entrada.lower()
+			insertIntoBD(created_at, entrada, valor, idEstacao)
 
 	conn.close()
 
