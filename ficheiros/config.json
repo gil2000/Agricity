@@ -1,8 +1,8 @@
 {
     "mysql": {
         "host": "localhost",
-        "user": "root",
-        "passwd": "",
+        "user": "agricity",
+        "passwd": "@gricitY1",
         "db": "agricity",
         "tables": "estacao"
     },

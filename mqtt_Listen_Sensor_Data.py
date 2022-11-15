@@ -1,5 +1,6 @@
 # Importar a biblioteca paho e chamar a funçao sensor_Data_handler do ficheiro store
 import json
+from datetime import datetime
 import paho.mqtt.client as mqtt
 from store_Sensor_Data_to_DB import sensor_Data_Handler
 
@@ -26,9 +27,16 @@ def on_connect(mosq, obj, flag, rc):
 def on_message(mosq, obj, msg):
 	# This is the Master Call for saving MQTT Data into DB
 	# Função "sensor_Data_Handler" está no script "sensor_data_to_db.py"
-	print ("Dados MQTT recebidos...")
-	print ("MQTT Tópico: " + msg.topic)  
-	print ("Dados: " + str(msg.payload))
+	#print ("Dados MQTT recebidos...")
+	#print ("MQTT Tópico: " + msg.topic)  
+	#print ("Dados: " + str(msg.payload))
+	#f = open("log.txt", "a")
+	#f.write(datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
+	#f.write("\n")
+	#f.write(str(msg.payload))
+	#f.write("\n")
+	#f.flush()
+	#f.close()
 	sensor_Data_Handler(msg.topic, msg.payload)
 
 def on_subscribe(mosq, obj, mid, granted_qos):
