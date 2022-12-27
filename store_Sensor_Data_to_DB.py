@@ -129,13 +129,7 @@ def Data_Handler(jsonData):
 	conn.close()
  
 	try:
-		del agricityData
-		del lat
-		del lon
-		del created_at
-		del nomeEstacao
-		del jsonData
-		del json_Dict
+		del agricityData, lat, lon, created_at, nomeEstacao, jsonData, json_Dict
 		gc.collect()
 	except Exception as e:
 		logf.write(datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
