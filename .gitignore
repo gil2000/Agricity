@@ -2,3 +2,7 @@ __pycache__/
 __pycache__/store_Sensor_Data_to_DB.cpython-310.pyc
 __pycache__/store_Sensor_Data_to_DB.cpython-310
 .vscode
+log.txt
+ficheiros/envio_axians_19.07.2022.json
+mqtt_Publish_Dummy_Data.py
+error.log
