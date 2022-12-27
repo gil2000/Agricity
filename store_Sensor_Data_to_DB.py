@@ -2,6 +2,7 @@
 from datetime import datetime
 import json
 import mysql.connector
+import gc
 
 with open("ficheiros/config.json") as json_data_file:
     data = json.load(json_data_file)
@@ -50,11 +51,12 @@ def Data_Handler(jsonData):
 	#validação mt fast
 	try:
 		if int(agricityData['msgID']) == 2:
-			if float(agricityData['barometricPressure']) > 10000 or float(agricityData['barometricPressure']) < 0:
-				agricityData['barometricPressure'] = 0
+			#TROCAR ISTO PARA PARAR DE METER BAROMETRIC PRESSURE A 0
+			agricityData['barometricPressure'] = 0			
 
 			if float(agricityData['soilTemperature']) > 1000:
 				agricityData['soilTemperature'] = 0
+    
 	except Exception as e:
 		logf.write("Failed to use {0}: {1}\n".format(str(agricityData), str(e)))
 		logf.write("\n")
@@ -110,9 +112,8 @@ def Data_Handler(jsonData):
 			conn.commit()
    
 		except Exception as e:
-			logf.write("Failed to insert to database {0} with valor {1}: {2}\n".format(str(tabela),valor, str(e)))
-			logf.write("\n")
 			logf.write(datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
+			logf.write("Failed to insert to database {0} with valor {1}: {2}\n".format(str(tabela),valor, str(e)))
 			logf.write("\n")
 			logf.flush()
 
@@ -126,7 +127,21 @@ def Data_Handler(jsonData):
    
 	logf.close()
 	conn.close()
-
+ 
+	try:
+		del agricityData
+		del lat
+		del lon
+		del created_at
+		del nomeEstacao
+		del jsonData
+		del json_Dict
+		gc.collect()
+	except Exception as e:
+		logf.write(datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
+		logf.write("Failed to clear memory: {0}\n".format(str(e)))
+		logf.write("\n")
+		logf.flush()
 
 
 
