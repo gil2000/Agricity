@@ -2,7 +2,7 @@
     "mysql": {
         "host": "localhost",
         "user": "root",
-        "passwd": "@",
+        "passwd": "",
         "db": "agricity",
         "tables": "estacao"
     },
