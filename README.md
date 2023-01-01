@@ -7,5 +7,4 @@ Para iniciar basta correr
 
 ```
 python main.py
-
 ```
