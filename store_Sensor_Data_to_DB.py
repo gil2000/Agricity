@@ -60,6 +60,7 @@ def Data_Handler(jsonData):
 	except Exception as e:
 		logf.write("Failed to use {0}: {1}\n".format(str(agricityData), str(e)))
 		logf.write("\n")
+	logf.write(jsonData)
 		logf.write(datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
 		logf.write("\n")
 		logf.flush()
@@ -91,6 +92,7 @@ def Data_Handler(jsonData):
 	except Exception as e:
 		logf.write("Failed to query database for {0}: {1}\n".format(str(nomeEstacao), str(e)))
 		logf.write("\n")
+		logf.write(jsonData)
 		logf.write(datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
 		logf.write("\n")
 		logf.flush()
@@ -110,11 +112,11 @@ def Data_Handler(jsonData):
 			vals = (created_at, valor, idEstacao)
 			cursor.execute(insert, vals)	
 			conn.commit()
-   
 		except Exception as e:
 			logf.write(datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
 			logf.write("Failed to insert to database {0} with valor {1}: {2}\n".format(str(tabela),valor, str(e)))
 			logf.write("\n")
+			logf.write(jsonData)
 			logf.flush()
 
 
@@ -135,6 +137,7 @@ def Data_Handler(jsonData):
 		logf.write(datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
 		logf.write("Failed to clear memory: {0}\n".format(str(e)))
 		logf.write("\n")
+		logf.write(jsonData)
 		logf.flush()
 
 
