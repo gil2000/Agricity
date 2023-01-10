@@ -60,7 +60,7 @@ def Data_Handler(jsonData):
 	except Exception as e:
 		logf.write("Failed to use {0}: {1}\n".format(str(agricityData), str(e)))
 		logf.write("\n")
-	logf.write(jsonData)
+		logf.write(jsonData)
 		logf.write(datetime.now().strftime("%Y/%m/%d %H:%M:%S"))
 		logf.write("\n")
 		logf.flush()
