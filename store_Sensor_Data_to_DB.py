@@ -48,6 +48,9 @@ def Data_Handler(jsonData):
 
 	logf = open("error.log", "a")
  
+	if "ledState" in agricityData:
+		return
+     
 	#validação mt fast
 	try:
 		if int(agricityData['msgID']) == 2:
