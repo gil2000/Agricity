@@ -14,6 +14,12 @@ with open("ficheiros/config.json") as json_data_file:
 
 # Função para guardar a Temperatura na BD
 def Data_Handler(jsonData):
+	"""Main function that stores received JSON data into respective DB tables
+
+	Args:
+		jsonData (string): JSON data passed from main this script that contains all the
+  information received via MQTT
+	"""
 
 	#Ligação à BD
 	conn = mysql.connector.connect(
@@ -22,11 +28,18 @@ def Data_Handler(jsonData):
 		user=data['mysql']['user'],
 		password=data['mysql']['passwd']
 		)
+	"""
+	Connects to Database using the data stored in config.json
+	"""
 
 	cursor = conn.cursor()
 
 	##Parsing dos Dados 
 	json_Dict = json.loads(jsonData)
+	"""
+	Loads the jsondata into a json Dict for better usage and parsing of data. 
+ 	This allows the usage of json_Dict['key'] that is the basis of this whole script
+ 	"""
 	#Ler apenas os dados que são relevantes
 	
 	#Dados dependentes do TTN
