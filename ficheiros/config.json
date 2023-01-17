@@ -2,7 +2,7 @@
     "mysql": {
         "host": "localhost",
         "user": "root",
-        "passwd": "",
+        "passwd": "{YOUR PASSWD}",
         "db": "agricity",
         "tables": "estacao"
     },
@@ -12,8 +12,8 @@
         "port": 1883,
         "alive_interval": 120,
         "topic": "#",
-        "user": "teste-agricity@ttn",
-        "passwd": "NNSXS.6ZOQRGSQDUE3GK4LO6OK2T2ZYMPZCVCS7PSRGRI.373EW3C54Z5QGNEL5LSD35VKS5NMDSXWDXI7S7I2F5U4E2D56PCQ"
+        "user": "{YOUR USER}",
+        "passwd": "{YOUR PASSWD}"
     },
 
     "validacoes": {
