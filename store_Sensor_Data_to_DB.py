@@ -21,19 +21,6 @@ def Data_Handler(jsonData):
   information received via MQTT
 	"""
 
-	#Ligação à BD
-	conn = mysql.connector.connect(
-		host= data['mysql']['host'],
-		database=data['mysql']['db'],
-		user=data['mysql']['user'],
-		password=data['mysql']['passwd']
-		)
-	"""
-	Connects to Database using the data stored in config.json
-	"""
-
-	cursor = conn.cursor()
-
 	##Parsing dos Dados 
 	json_Dict = json.loads(jsonData)
 	"""
@@ -63,7 +50,20 @@ def Data_Handler(jsonData):
  
 	if "ledState" in agricityData:
 		return
-     
+
+	#Ligação à BD
+	conn = mysql.connector.connect(
+		host= data['mysql']['host'],
+		database=data['mysql']['db'],
+		user=data['mysql']['user'],
+		password=data['mysql']['passwd']
+		)
+	"""
+	Connects to Database using the data stored in config.json
+	"""
+
+	cursor = conn.cursor()
+	
 	#validação mt fast
 	try:
 		if int(agricityData['msgID']) == 2:
